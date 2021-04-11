@@ -1,0 +1,9 @@
+E:\Root\Programación\Coelsa Web API\Services\bin\Debug\netcoreapp3.1\Services.deps.json
+E:\Root\Programación\Coelsa Web API\Services\bin\Debug\netcoreapp3.1\Services.dll
+E:\Root\Programación\Coelsa Web API\Services\bin\Debug\netcoreapp3.1\Services.pdb
+E:\Root\Programación\Coelsa Web API\Services\obj\Debug\netcoreapp3.1\Services.csprojAssemblyReference.cache
+E:\Root\Programación\Coelsa Web API\Services\obj\Debug\netcoreapp3.1\Services.AssemblyInfoInputs.cache
+E:\Root\Programación\Coelsa Web API\Services\obj\Debug\netcoreapp3.1\Services.AssemblyInfo.cs
+E:\Root\Programación\Coelsa Web API\Services\obj\Debug\netcoreapp3.1\Services.csproj.CoreCompileInputs.cache
+E:\Root\Programación\Coelsa Web API\Services\obj\Debug\netcoreapp3.1\Services.dll
+E:\Root\Programación\Coelsa Web API\Services\obj\Debug\netcoreapp3.1\Services.pdb
