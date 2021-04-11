@@ -21,8 +21,8 @@ namespace Servidor.Services
 		public List<ContactModel> ListarTodos()
 		{
 			List<ContactModel> output = new List<ContactModel>();
-			string consulta = "SELECT * FROM CONTACTS";
-			var tabla = _db.Listar(consulta);
+			string consulta = "SELECTALLCONTACTS";
+			var tabla = _db.Listar(consulta, null);
 
 			foreach (DataRow fila in tabla.Rows)
 			{
@@ -42,16 +42,24 @@ namespace Servidor.Services
 
 		public ContactModel BuscarContactoPorId(int id)
 		{
-			var lista = ListarTodos();
-			var contact = lista.Find(c => c.Id == id);
-			if (contact != null)
+			string consulta = "SELECTCONTACTBYID";
+			Hashtable parametros = new Hashtable();
+			parametros.Add("@Id", id);
+			ContactModel contact = null;
+
+			var tabla = _db.Listar(consulta, parametros);
+			if (tabla.Rows.Count > 0)
 			{
-				return contact;
+				contact = new ContactModel();
+				contact.Id = int.Parse(tabla.Rows[0]["ID"].ToString());
+				contact.FirstName = tabla.Rows[0]["FIRSTNAME"].ToString();
+				contact.LastName = tabla.Rows[0]["LASTNAME"].ToString();
+				contact.Company = tabla.Rows[0]["COMPANY"].ToString();
+				contact.Email = tabla.Rows[0]["EMAIL"].ToString();
+				contact.PhoneNumber = Convert.ToInt32(tabla.Rows[0]["PHONENUMBER"].ToString());
 			}
-			else
-			{
-				return null;
-			}
+
+			return contact;
 		}
 
 		public bool GuardarContacto(ContactModel contact)
@@ -63,9 +71,7 @@ namespace Servidor.Services
 			parametros.Add("@Email", contact.Email);
 			parametros.Add("@PhoneNumber", contact.PhoneNumber);
 
-			string consulta = @"INSERT INTO CONTACTOS" +
-				"FIRSTNAME, LASTNAME, COMPANY, EMAIL, PHONENUMBER) " +
-				"VALUES (@FirstName, @LastName, @Company, @Email, @PhoneNumber)";
+			string consulta = "INSERTCONTACT";
 
 			try
 			{
@@ -89,9 +95,7 @@ namespace Servidor.Services
 			parametros.Add("@Email", contact.Email);
 			parametros.Add("@PhoneNumber", contact.PhoneNumber);
 
-			string consulta = @"UPDATE CONTACTS" +
-				"SET FIRSTNAME = @FirstName, LASTNAME = @LastName, COMPANY = @Company, EMAIL = @Email, PHONENUMBER = @PhoneNumber" +
-				"WHERE ID = @Id";
+			string consulta = "UPDATECONTACT";
 
 			try
 			{
@@ -110,7 +114,7 @@ namespace Servidor.Services
 			Hashtable parametros = new Hashtable();
 			parametros.Add("@Id", id);
 
-			string consulta = "DELETE FROM CONTACTS WHERE ID = @Id";
+			string consulta = "DELETECONTACT";
 
 			try
 			{

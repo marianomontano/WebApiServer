@@ -10,10 +10,12 @@ namespace Services
 {
 	public class DataAccess : IDataAccess
 	{
-		private SqlConnection connection = new SqlConnection(@"Data Source =.\; Initial Catalog = COELSA_API; Integrated Security = True");
+		private static string connectionString = @"Data Source =.\; Initial Catalog = COELSA_API; Integrated Security = True";
+		private SqlConnection connection;
 
-		public DataTable Listar(string query)
+		public DataTable Listar(string query, Hashtable parametros)
 		{
+			connection = new SqlConnection(connectionString);
 			var table = new DataTable();
 
 			if (connection.State != ConnectionState.Open)
@@ -22,7 +24,16 @@ namespace Services
 			using (connection)
 			{
 				var command = new SqlCommand(query, connection);
-				command.CommandType = CommandType.Text;
+				command.CommandType = CommandType.StoredProcedure;
+				
+				if(parametros != null)
+				{
+					foreach(string param in parametros.Keys)
+					{
+						command.Parameters.AddWithValue(param, parametros[param]);
+					}
+				}
+
 				var adapter = new SqlDataAdapter(command);
 				adapter.Fill(table);
 			}
@@ -32,6 +43,7 @@ namespace Services
 
 		public int Escribir(string query, Hashtable parametros)
 		{
+			connection = new SqlConnection(connectionString);
 			int resultado;
 
 			if (connection.State != ConnectionState.Open)
@@ -41,7 +53,7 @@ namespace Services
 			{
 				var transaction = connection.BeginTransaction();
 				var command = new SqlCommand(query, connection);
-				command.CommandType = CommandType.Text;
+				command.CommandType = CommandType.StoredProcedure;
 				command.Transaction = transaction;
 
 				if (parametros != null)

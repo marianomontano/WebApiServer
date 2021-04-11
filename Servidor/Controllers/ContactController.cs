@@ -63,7 +63,7 @@ namespace Servidor.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest();
 
-			var contact = _db.BuscarContactoPorId(contacto.Id);
+			var contact = _db.BuscarContactoPorId(id);
 
 			if (contact == null)
 				return NotFound();

@@ -22,7 +22,6 @@ namespace Servidor.Models
 		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 
-		[Range(5, 10)]
 		public long PhoneNumber { get; set; }
 	}
 }

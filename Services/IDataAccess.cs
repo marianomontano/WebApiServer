@@ -6,6 +6,6 @@ namespace Services
 	public interface IDataAccess
 	{
 		int Escribir(string query, Hashtable parametros);
-		DataTable Listar(string query);
+		DataTable Listar(string query, Hashtable parametros);
 	}
 }
